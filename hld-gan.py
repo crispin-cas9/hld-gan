@@ -3,7 +3,7 @@
 
 from __future__ import print_function, division
 
-from keras.datasets import mnist
+#from keras.datasets import mnist
 from keras.datasets import cifar10
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout
 from keras.layers import BatchNormalization, Activation, ZeroPadding2D
@@ -120,9 +120,9 @@ class GAN():
 		data_batch = np.array(
 			[self.get_image(sample_file, width, height, mode) for sample_file in image_files])
 
-		return data_batch	 
+		return data_batch
 
-	def train(self, epochs, batch_size=128, save_interval=50):
+	def train(self, epochs, batch_size=128, save_interval=1):
 		
 		data_dir = './data'
 		X_train = self.get_batch(glob(os.path.join(data_dir, '*.png'))[:5000], 28, 28, 'RGB')
@@ -140,7 +140,7 @@ class GAN():
 		g_loss_logs = []
 
 		for epoch in range(epochs):
-
+			
 			# ---------------------
 			#  Train Discriminator
 			# ---------------------
@@ -191,16 +191,16 @@ class GAN():
 			d_loss_logs_f_a = np.array(d_loss_logs_f)
 			g_loss_logs_a = np.array(g_loss_logs)
 
-			#Generate the plot at the end of training
-			plt.plot(d_loss_logs_r_a[:,0], d_loss_logs_r_a[:,1], label="Discriminator Loss - Real")
-			plt.plot(d_loss_logs_f_a[:,0], d_loss_logs_f_a[:,1], label="Discriminator Loss - Fake")
-			plt.plot(g_loss_logs_a[:,0], g_loss_logs_a[:,1], label="Generator Loss")
-			plt.xlabel('Epochs')
-			plt.ylabel('Loss')
-			plt.legend()
-			plt.title('Variation of losses over epochs')
-			plt.grid(True)
-			plt.show()	   
+		#Generate the plot at the end of training
+		plt.plot(d_loss_logs_r_a[:,0], d_loss_logs_r_a[:,1], label="Discriminator Loss - Real")
+		plt.plot(d_loss_logs_f_a[:,0], d_loss_logs_f_a[:,1], label="Discriminator Loss - Fake")
+		plt.plot(g_loss_logs_a[:,0], g_loss_logs_a[:,1], label="Generator Loss")
+		plt.xlabel('Epochs')
+		plt.ylabel('Loss')
+		plt.legend()
+		plt.title('Variation of losses over epochs')
+		plt.grid(True)
+		plt.show()	   
 
 	def save_imgs(self, epoch):
 		r, c = 5, 5
@@ -223,5 +223,5 @@ class GAN():
 
 if __name__ == '__main__':
 	gan = GAN()
-	gan.train(epochs=500, batch_size=32, save_interval=50)
+	gan.train(epochs=10000, batch_size=32, save_interval=1000)
 

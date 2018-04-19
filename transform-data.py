@@ -7,21 +7,21 @@ import pickle
 
 datafolder = os.listdir(path='data')
 
-def toarray(path):
-	imlist = []
-	for file in path:
-		if file.endswith('.png'):
-			im = Image.open("data/" + file)
-			new = im.resize((28, 28))
-			new = new.convert("RGB")
-			imlist.append(numpy.array(new))
-	return imlist
+# def toarray(path):
 
-datalist = toarray(datafolder)
+imlist = []
+for file in datafolder:
+	if file.endswith('.png'):
+		name = "data/" + file
+		im = Image.open(name)
+		new = im.resize((28, 28))
+		new = new.convert("RGB")
+		new.save(name)
 
-output = open('data.pkl', 'wb')
+# return imlist
 
-pickle.dump(datalist, output)
+# datalist = toarray(datafolder)
 
+# output = open('data.pkl', 'wb')
+# pickle.dump(datalist, output)
 # pklfile = open('data.pkl', 'rb')
-# = pickle.load(pklfile)
